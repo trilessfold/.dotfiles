@@ -1,0 +1,6 @@
+SERVICE_LIST=(core \
+ds \
+mediator \
+pa-sip \
+pa-sigtran \
+pa-megaco)

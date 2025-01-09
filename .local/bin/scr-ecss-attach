@@ -1,0 +1,29 @@
+#!/bin/bash
+
+. scr-ecss-service-list
+
+MENU_ITEMS=""
+CHOICE=0
+
+echo ${#SERVICE_LIST[@]}
+
+for i in $(seq 1 ${#SERVICE_LIST[@]}); do
+    MENU_ITEMS=$MENU_ITEMS"$i ${SERVICE_LIST[$(( i - 1 ))]} "
+
+    if [[ ${SERVICE_LIST[$(( i - 1 ))]} == $1 ]]; then
+        CHOICE=$i
+    fi
+done
+
+echo $MENU_ITEMS
+
+if [[ $CHOICE == 0 ]]; then
+    CHOICE=$(dialog --title "$TITLE" \
+                    --menu "Please select" $(( ${#SERVICE_LIST[@]} + 7 )) 40 ${#SERVICE_LIST[@]} $MENU_ITEMS \
+                    2>&1 >/dev/tty)
+    clear
+fi
+
+echo ${SERVICE_LIST[$(( $CHOICE - 1 ))]}
+
+tmux attach -t ecss-${SERVICE_LIST[$(( $CHOICE - 1 ))]}

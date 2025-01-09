@@ -1,0 +1,70 @@
+#!/bin/bash
+
+. scr-ecss-service-list
+
+function usage() {
+>&2 cat << EOF
+Usage: $0
+  scr-ecss-start [options] src_directory
+    src_directory - the local ECSS-10 sources with the bu script
+
+Options
+  -d, --dest
+    Enter a remote URI with a ECSS-10 source path. It copy a release from
+    the destination by SSH
+EOF
+exit 1
+}
+
+###############################################################################
+
+vars=$(getopt -o :hd: --long help,dest: -- "$@")
+eval set -- "$vars"
+
+while :
+do
+  case $1 in
+    -d | --dest)
+        DST_URI=$2
+        shift 2
+        ;;
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    --)
+        shift
+        break
+        ;;
+    *)
+        echo Unsupported option: $1
+        usage
+        exit 1
+        ;;
+  esac
+done
+
+if [[ $# -eq 0 ]]; then
+  usage
+fi
+
+###############################################################################
+
+SERVICE_LIST_TMP=$( IFS=$'\n'; echo "${SERVICE_LIST[@]}" )
+
+if [[ $# > 1 ]]; then
+    SERVICE_LIST_TMP="${@:2}"
+fi
+
+cd $1
+if [ -n "${DST_URI}" ]; then
+    rsync -Wa --progress $DST_URI/releases/ release
+    rsync -Wa --progress $DST_URI/_build ./_build
+fi
+
+for SERVICE in $SERVICE_LIST_TMP; do
+    tmux new-session -d -s ecss-$SERVICE $SHELL -ci "cd ${PWD};./bu ${SERVICE} cn no-build-toolchain;$SHELL"
+    echo "Starting ecss-$SERVICE"
+done
+cd -
+

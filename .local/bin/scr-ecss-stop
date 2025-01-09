@@ -1,0 +1,17 @@
+#!/bin/bash
+
+. scr-ecss-service-list
+
+DOCKER_STR=""
+
+for SERVICE in ${SERVICE_LIST[@]}; do
+    DOCKER_STR="${DOCKER_STR} $(docker ps --no-trunc --format "table {{.ID}}\t{{.Command}}" | grep -E -i "./bu .* ${SERVICE}" | awk '{print $1}')"
+done
+
+docker stop $DOCKER_STR
+
+if [[ "$1" != "docker" ]]; then
+for SERVICE in ${SERVICE_LIST[@]}; do
+    tmux kill-session -t  ecss-$SERVICE
+done
+fi
