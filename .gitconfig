@@ -1,0 +1,15 @@
+[alias]
+	lg = log --color --graph --full-history --pretty=format:'%C(yellow)%h%Creset -%Cred%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	upv = "!f() { \
+	       if [ $# -eq 0 ] || ([ $1 != "smg" ] && [ $1 != "coral" ]); then echo "Input software type: smg, coral"; return; fi; \
+	       ver=$((`awk '{ print $3 }' src/buildcnt.h`+1)); text=`cat src/buildcnt.h`; echo $text; printf '\n-----------------------\n'; \
+	       text=`echo $text | awk '{$3='$ver'; print }'`; echo $text > src/buildcnt.h; echo $text; printf '\n'; \
+	       if [ $1 = "smg" ]; then ver_type=sip; else ver_type=$1; fi; \
+	       git add src/buildcnt.h; git commit -m \"${1}: `cat version/$ver_type`.$ver\"; \
+	       }; f"
+[filesystem "Ubuntu|11.0.4|/dev/sda4"]
+	timestampResolution = 7000 nanoseconds
+	minRacyThreshold = 7324 microseconds
+[user]
+	email = artem.shcherba@eltex.loc
+	name = Artyom Shcherba
