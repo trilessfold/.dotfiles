@@ -61,6 +61,7 @@ if [ -n "${DST_URI}" ]; then
     rsync -Wa --progress $DST_URI/releases/ ./releases/
     rsync -Wa --progress $DST_URI/_build/ ./_build/
     rsync -Wa --progress $DST_URI/env/ ./env/
+    rsync -Wa --progress $DST_URI/apps/ ./apps/
 fi
 
 for SERVICE in $SERVICE_LIST_TMP; do
