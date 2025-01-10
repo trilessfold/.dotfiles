@@ -58,12 +58,13 @@ fi
 
 cd $1
 if [ -n "${DST_URI}" ]; then
-    rsync -Wa --progress $DST_URI/releases/ release
-    rsync -Wa --progress $DST_URI/_build ./_build
+    rsync -Wa --progress $DST_URI/releases/ ./releases/
+    rsync -Wa --progress $DST_URI/_build/ ./_build/
+    rsync -Wa --progress $DST_URI/env/ ./env/
 fi
 
 for SERVICE in $SERVICE_LIST_TMP; do
-    tmux new-session -d -s ecss-$SERVICE $SHELL -ci "cd ${PWD};./bu ${SERVICE} cn no-build-toolchain;$SHELL"
+    tmux new-session -d -s ecss-$SERVICE $SHELL -ci "cd ${PWD};./bu ${SERVICE} cn;$SHELL"
     echo "Starting ecss-$SERVICE"
 done
 cd -
