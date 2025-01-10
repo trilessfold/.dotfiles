@@ -65,7 +65,7 @@ if [ -n "${DST_URI}" ]; then
 fi
 
 for SERVICE in $SERVICE_LIST_TMP; do
-    tmux new-session -d -s ecss-$SERVICE $SHELL -ci "cd ${PWD};./bu ${SERVICE} cn;$SHELL"
+    tmux new-session -d -s ecss-$SERVICE $SHELL -ci "cd ${PWD};./bu ${SERVICE} cn ntc;$SHELL"
     echo "Starting ecss-$SERVICE"
 done
 cd -
