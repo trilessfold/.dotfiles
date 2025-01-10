@@ -129,5 +129,4 @@ export PATH=$PATH:/home/trilessfold/.local/bin:/home/trilessfold/bin:/usr/sbin:\
 /opt/armv7-marvell-linux-gnueabi-softfp_i686/bin:\
 /usr/local/go/bin
 
-. $HOME/.asdf/asdf.sh
-eval "$(thefuck --alias)"
+alias cocon="sshpass -p password ssh admin@localhost -p 8023"
