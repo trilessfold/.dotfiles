@@ -10,7 +10,7 @@ Usage: $0
 
 Options
   -d, --dest
-    Enter a remote URI with a ECSS-10 source path. It copy a release from
+    Enter a remote URI including ECSS-10 source path. It copies a release from
     the destination by SSH
 EOF
 exit 1
