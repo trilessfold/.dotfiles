@@ -123,10 +123,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=$PATH:/home/trilessfold/.local/bin:/home/trilessfold/bin:/usr/sbin:\
+export PATH=$PATH::/usr/sbin:\
 /opt/gcc-linaro-5.3.1-2016.05-x86_64_aarch64-linux-gnu/bin:\
 /opt/marvell/bin/:\
 /opt/armv7-marvell-linux-gnueabi-softfp_i686/bin:\
-/usr/local/go/bin
+/usr/local/go/bin:\
+~/.local/bin
 
 alias cocon="sshpass -p password ssh admin@localhost -p 8023"
