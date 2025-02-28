@@ -130,4 +130,6 @@ export PATH=$PATH::/usr/sbin:\
 /usr/local/go/bin:\
 ~/.local/bin
 
+export PATH=/home/ecss/.cache/rebar3/bin:$PATH
+
 alias cocon="sshpass -p password ssh admin@localhost -p 8023"
