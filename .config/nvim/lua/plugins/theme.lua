@@ -4,4 +4,7 @@ return {
     lazy = true,
     opts = { style = "night" },
   },
+  {
+    "rebelot/kanagawa.nvim",
+  },
 }
