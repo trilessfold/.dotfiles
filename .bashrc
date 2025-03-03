@@ -133,3 +133,4 @@ export PATH=$PATH::/usr/sbin:\
 export PATH=/home/ecss/.cache/rebar3/bin:$PATH
 
 alias cocon="sshpass -p password ssh admin@localhost -p 8023"
+source ~/.git-prompt.sh
