@@ -52,4 +52,8 @@ require("lazy").setup({
   },
 })
 
-require("lspconfig").erlangls.setup({})
+require("lspconfig").erlangls.setup({
+    root_dir = function(fname)
+        return LazyVim.root.cwd()
+    end
+})
