@@ -1,6 +1,7 @@
 {
   "extras": [
     "lazyvim.plugins.extras.lang.erlang",
+    "lazyvim.plugins.extras.lang.git",
     "lazyvim.plugins.extras.lang.sql"
   ],
   "install_version": 8,

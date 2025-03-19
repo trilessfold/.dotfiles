@@ -3,6 +3,7 @@
 -- Add any additional options here
 vim.cmd("set background=dark")
 vim.cmd("set t_Co=256")
+vim.cmd("set diffopt+=vertical")
 
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
