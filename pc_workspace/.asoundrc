@@ -1,0 +1,172 @@
+#################_MY_LOOP_1_#################
+
+pcm.!my_loop_in_1 {
+    type plug
+    slave.pcm "dmixer_1"
+}
+
+pcm.dmixer_1 {
+    type dmix
+    ipc_key 1024 # Any unique value for Interprocess Communication
+    ipc_perm 0666
+
+    slave {
+        pcm "hw:1,1,0"
+        period_size 1024
+        buffer_size 4096
+        rate 44100
+    }
+
+    bindings {
+        0 0
+        1 1
+    }
+}
+
+pcm.!my_loop_out_1 {
+    type plug
+    slave.pcm "dsnooped_1"
+}
+
+pcm.dsnooped_1 {
+    type dsnoop
+    ipc_key 2048 # Any unique value for Interprocess Communication
+    ipc_perm 0666
+
+    slave {
+        pcm "hw:1,0,0"
+        period_size 1024
+        buffer_size 4096
+        rate 44100
+    }
+
+    bindings {
+        0 0
+        1 1
+    }
+}
+
+#################_MY_LOOP_2_#################
+
+pcm.!my_loop_in_2 {
+    type plug
+    slave.pcm "dmixer_2"
+}
+
+pcm.dmixer_2 {
+    type dmix
+    ipc_key 1025 # Any unique value for Interprocess Communication
+    ipc_perm 0666
+
+    slave {
+        pcm "hw:2,1,0"
+        period_size 1024
+        buffer_size 4096
+        rate 44100
+    }
+
+    bindings {
+        0 0
+        1 1
+    }
+}
+
+pcm.!my_loop_out_2 {
+    type plug
+    slave.pcm "dsnooped_2"
+}
+
+pcm.dsnooped_2 {
+    type dsnoop
+    ipc_key 2049 # Any unique value for Interprocess Communication
+    ipc_perm 0666
+
+    slave {
+        pcm "hw:2,0,0"
+        period_size 1024
+        buffer_size 4096
+        rate 44100
+    }
+
+    bindings {
+        0 0
+        1 1
+    }
+}
+
+#################_MY_LOOP_3_#################
+
+pcm.my_loop_in_3 {
+    type plug
+    slave.pcm "dmixer_3"
+}
+
+pcm.dmixer_3 {
+    type dmix
+    ipc_key 1026 # Any unique value for Interprocess Communication
+    ipc_perm 0666
+
+    slave {
+        pcm "hw:3,1,0"
+        period_size 1024
+        buffer_size 4096
+        rate 44100
+        periods 0
+        period_time 0
+    }
+
+    bindings {
+        0 0
+        1 1
+    }
+}
+
+############################################
+#pcm.my_loop_in_3_1 {
+#    type plug
+#    slave.pcm "dmixer_3"
+#}
+
+#pcm.dmixer_3_1 {
+#    type dmix
+#    ipc_key 1026 # Any unique value for Interprocess Communication
+#    ipc_perm 0666
+
+#    slave {
+#        pcm "hw:3,1,1"
+#        period_size 1024
+#        buffer_size 4096
+#        rate 44100
+#        periods 0
+#        period_time 0
+#    }
+
+#    bindings {
+#        0 0
+#        1 1
+#    }
+#}
+###########################################
+
+pcm.my_loop_out_3 {
+    type plug
+    slave.pcm "dsnooped_3"
+}
+
+pcm.dsnooped_3 {
+    type dsnoop
+    ipc_key 2050 # Any unique value for Interprocess Communication
+    ipc_perm 0666
+
+    slave {
+        pcm "hw:3,0,0"
+        period_size 1024
+        buffer_size 4096
+        rate 44100
+    }
+
+    bindings {
+        0 0
+        1 1
+    }
+}
