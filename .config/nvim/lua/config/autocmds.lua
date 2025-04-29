@@ -14,7 +14,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     end,
 })
 
-vim.api.nvim_create_autocmd({ "FileType" }, {
+vim.api.nvim_create_autocmd("FileType", {
     pattern = { "git" },
-    command = "set foldmethod=syntax",
+    callback = function()
+        vim.opt_local.foldmethod = "syntax"
+    end,
 })
