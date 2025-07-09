@@ -1,21 +1,24 @@
 #  GNU Stow usage
 ## Stow all packages
-<pre>
-  $ stow .
-</pre>
+``` bash
+    $ stow .
+```
 or
-<pre>
-  $ stow -R .
-</pre>
+``` bash
+    $ stow -R .
+
+```
 Where the R option is restowing with deleting obsolete symlinks
+
 ## Remove all packages
-<pre>
-  $ stow -D .
-</pre>
+``` bash
+    $ stow -D .
+```
 Where the R option is restowing with deleting obsolete symlinks 
+
 ## REWRITE all existing files from packages
-<pre>
-  $ stow --adopt .
-  $ git restore .
-  $ stow -R .
-</pre>
+``` bash
+    $ stow --adopt .
+    $ git restore .
+    $ stow -R .
+```
