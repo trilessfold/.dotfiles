@@ -7,4 +7,7 @@ vim.keymap.set("n", "<leader>gb", "<cmd>Git blame<cr>", { desc = "Buffer blame (
 vim.keymap.set("n", "<leader>gB", "<cmd>.DiffviewFileHistory <cr>", { desc = "Line history" })
 vim.keymap.set("n", "<leader>gF", "<cmd>DiffviewFileHistory %<cr>", { desc = "File history" })
 vim.keymap.set("n", "<leader>gs", "<cmd>Git<cr>", { desc = "Git status (fugitive)" })
+vim.keymap.set("n", "<A-h>", "<cmd>normal! H<cr>")
+vim.keymap.set("n", "<A-l>", "<cmd>normal! L<cr>")
+vim.keymap.set("n", "<A-m>", "<cmd>normal! M<cr>")
 
