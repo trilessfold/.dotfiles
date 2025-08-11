@@ -13,3 +13,7 @@
 [user]
 	email = artem.shcherba@eltex.loc
 	name = Artyom Shcherba
+[diff]
+	tool = nvimdiff
+[difftool "nvimdiff"]
+	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"

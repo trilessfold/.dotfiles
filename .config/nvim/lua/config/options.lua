@@ -16,6 +16,7 @@ vim.opt.diffopt:append({
   "internal",
   "closeoff",
   "algorithm:myers",
+  "inline:char",
   "context:5",
   "linematch:100",
   "indent-heuristic",    -- лучшее выравнивание блоков
