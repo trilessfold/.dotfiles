@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+
+import os
+import re
+import sys
+import requests
+
+# === НАСТРОЙКИ ===
+API_KEY = "YOUR_KEY_HERE"
+DOWNLOAD_DIR = "./redmine_files"
+
+# === НАСТРОЙКИ СЕССИИ ===
+session = requests.Session()
+session.headers.update({
+    "X-Redmine-API-Key": API_KEY,
+    "Content-Type": "application/json"
+})
+
+def parse_issue_url(url: str):
+    """
+    Извлекает базовый адрес Redmine и ID задачи из ссылки.
+    Пример:
+      https://redmine.example.com/issues/1234  -> ('https://redmine.example.com', '1234')
+    """
+    match = re.match(r"(https?://[^/]+)/issues/(\d+)", url)
+    if not match:
+        print("❌ Неверный формат ссылки. Пример: https://redmine.example.com/issues/1234")
+        sys.exit(1)
+    base_url, issue_id = match.groups()
+    return base_url, issue_id
+
+
+def download_attachments(redmine_url: str, issue_id: str):
+    issue_url = f"{redmine_url}/issues/{issue_id}.json?include=attachments"
+    resp = session.get(issue_url)
+
+    if resp.status_code != 200:
+        print(f"❌ Не удалось получить задачу {issue_id}: {resp.status_code}")
+        return
+
+    issue = resp.json().get("issue", {})
+    attachments = issue.get("attachments", [])
+    if not attachments:
+        print(f"ℹ️ Нет вложений в задаче {issue_id}")
+        return
+
+    issue_dir = os.path.join(DOWNLOAD_DIR, f"{issue_id}")
+    os.makedirs(issue_dir, exist_ok=True)
+
+    for att in attachments:
+        filename = att["filename"]
+        file_url = att["content_url"]
+        print(f"📥 Скачиваю {filename} из задачи #{issue_id}...")
+
+        file_resp = session.get(file_url)
+        if file_resp.status_code == 200:
+            with open(os.path.join(issue_dir, filename), "wb") as f:
+                f.write(file_resp.content)
+        else:
+            print(f"⚠️ Ошибка скачивания {filename}: {file_resp.status_code}")
+
+    print(f"✅ Задача #{issue_id}: все вложения скачаны.")
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("Использование: python redmine_download.py <ссылка_на_задачу>")
+        sys.exit(1)
+
+    issue_url = sys.argv[1]
+    redmine_url, issue_id = parse_issue_url(issue_url)
+    os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+    download_attachments(redmine_url, issue_id)
+
+
+if __name__ == "__main__":
+    main()
+
