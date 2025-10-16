@@ -14,7 +14,7 @@ row=$(swaymsg -t get_tree | jq -r '
     | "[\($ws.name)] \($asterisk) <span weight=\"bold\">\(.app_id // .window_properties.class)</span>  - \(.name) <!-- \(.id) -->\u0000icon\u001f\($icon_name)"
     ' |
 	sed 's/&/&amp;/g' |
-	rofi -dmenu -show-icons -markup-rows -p "window")
+	rofi -monitor $(swaymsg -t get_outputs | jq -r '.[] | select(.focused==true).name') -dmenu -show-icons -markup-rows -p "window")
 
 if [ ! -z "$row" ]; then
 	winid=$(echo "$row" | sed 's/.*<!-- \([0-9]*\) -->.*/\1/')
