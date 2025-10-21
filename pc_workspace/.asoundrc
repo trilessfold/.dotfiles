@@ -11,7 +11,7 @@ pcm.dmixer_1 {
     ipc_perm 0666
 
     slave {
-        pcm "hw:1,1,0"
+        pcm "hw:0,1,0"
         period_size 1024
         buffer_size 4096
         rate 44100
@@ -34,7 +34,7 @@ pcm.dsnooped_1 {
     ipc_perm 0666
 
     slave {
-        pcm "hw:1,0,0"
+        pcm "hw:0,0,0"
         period_size 1024
         buffer_size 4096
         rate 44100
@@ -59,7 +59,7 @@ pcm.dmixer_2 {
     ipc_perm 0666
 
     slave {
-        pcm "hw:2,1,0"
+        pcm "hw:0,1,1"
         period_size 1024
         buffer_size 4096
         rate 44100
@@ -82,7 +82,7 @@ pcm.dsnooped_2 {
     ipc_perm 0666
 
     slave {
-        pcm "hw:2,0,0"
+        pcm "hw:0,0,1"
         period_size 1024
         buffer_size 4096
         rate 44100
@@ -107,7 +107,7 @@ pcm.dmixer_3 {
     ipc_perm 0666
 
     slave {
-        pcm "hw:3,1,0"
+        pcm "hw:0,1,2"
         period_size 1024
         buffer_size 4096
         rate 44100
@@ -159,7 +159,7 @@ pcm.dsnooped_3 {
     ipc_perm 0666
 
     slave {
-        pcm "hw:3,0,0"
+        pcm "hw:0,0,2"
         period_size 1024
         buffer_size 4096
         rate 44100
