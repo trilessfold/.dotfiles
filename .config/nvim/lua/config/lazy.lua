@@ -52,7 +52,10 @@ require("lazy").setup({
   },
 })
 
-require("lspconfig").erlangls.setup({
+-- keep for any cases. Rewrite LazyRootSpec
+--vim.g.root_spec = { "cwd" }
+
+require("lspconfig").elp.setup({
     root_dir = function(fname)
         return LazyVim.root.cwd()
     end
