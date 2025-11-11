@@ -14,8 +14,8 @@ return {
                 win = {
                     input = {
                         keys = {
-                            [")"] = { "history_forward", mode = { "i", "n" } },
-                            ["("] = { "history_back", mode = { "i", "n" } },
+                            ["<A-[>"] = { "history_forward", mode = { "i", "n" } },
+                            ["<A-]>"] = { "history_back", mode = { "i", "n" } },
                         },
                     },
                 },
