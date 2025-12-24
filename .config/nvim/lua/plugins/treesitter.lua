@@ -5,8 +5,8 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         opts = {
-            ensure_loaded = {
-                "erlang",
+            ensure_installed = {
+                "erlang"
             },
             textobjects = {
                 move = {
