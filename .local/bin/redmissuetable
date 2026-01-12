@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+
+import requests
+
+# Конфигурация
+REDMINE_URL = "https://red.eltex.loc"
+API_KEY = "YOUR_KEY"
+PROJECT_IDENTIFIER = "ecss-10-ssw"
+VERSION_NAME = "Buglist"  # название версии, если нужно
+ISSUE_TAG = "approved=3.18"  # фильтр по тегам
+STATUS = "open"  # фильтр по статусу
+
+headers = {
+    "X-Redmine-API-Key": API_KEY,
+    "Content-Type": "application/json"
+}
+
+def get_version_id(project, version_name):
+    url = f"{REDMINE_URL}/projects/{project}/versions.json"
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    versions = response.json()["versions"]
+    for version in versions:
+        if version["name"] == version_name:
+            return version["id"]
+    raise ValueError(f"Version '{version_name}' not found")
+
+def get_issues(project, version_id=None, issue_tag=None, status=None):
+    issues = []
+    offset = 0
+    limit = 100
+    while True:
+        params = {
+            "project_id": project,
+            "limit": limit,
+            "offset": offset,
+        }
+        if version_id:
+            params["fixed_version_id"] = version_id
+        if status:
+            params["status_id"] = status
+        if issue_tag:
+            params["f[]"] = "issue_tags"
+            params["op[issue_tags]"] = "="
+            params["v[issue_tags][]"] = issue_tag
+
+        url = f"{REDMINE_URL}/issues.json"
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        data = response.json()
+        issues.extend(data["issues"])
+        if offset + limit >= data["total_count"]:
+            break
+        offset += limit
+    return issues
+
+def format_issues_as_redmine_table(issues):
+    """Форматируем задачи в таблицу для вставки в Redmine"""
+    print(len(issues))
+    table = "| Задача Buglist | Задача в 3.18 | Заголовок |\n"
+    for issue in issues:
+        issue_id = issue['id']
+        subject = issue['subject'].replace('|', '\\|')  # экранируем | в тексте
+        table += f"| #{issue_id} | | {subject} |\n"
+    return table
+
+def main():
+    version_id = get_version_id(PROJECT_IDENTIFIER, VERSION_NAME)
+    issues = get_issues(PROJECT_IDENTIFIER, version_id, ISSUE_TAG, STATUS)
+    table_text = format_issues_as_redmine_table(issues)
+    print(table_text)
+
+if __name__ == "__main__":
+    main()
+
