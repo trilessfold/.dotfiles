@@ -49,26 +49,52 @@ def get_issues(project, version_id=None, issue_tag=None, status=None):
         response.raise_for_status()
         data = response.json()
         issues.extend(data["issues"])
+
         if offset + limit >= data["total_count"]:
             break
         offset += limit
+
     return issues
 
+def get_related_issues(issue_id):
+    url = f"{REDMINE_URL}/issues/{issue_id}.json"
+    params = {"include": "relations"}
+    response = requests.get(url, headers=headers, params=params)
+    response.raise_for_status()
+
+    relations = response.json()["issue"].get("relations", [])
+    related = []
+
+    for rel in relations:
+        if rel["issue_id"] == issue_id:
+            related.append(str(rel["issue_to_id"]))
+        else:
+            related.append(str(rel["issue_id"]))
+
+    return related
+
 def format_issues_as_redmine_table(issues):
-    """Форматируем задачи в таблицу для вставки в Redmine"""
-    print(len(issues))
-    table = "| Задача Buglist | Задача в 3.18 | Заголовок |\n"
+    table = "|| Задача || Заголовок || Связанные задачи ||\n"
+
     for issue in issues:
-        issue_id = issue['id']
-        subject = issue['subject'].replace('|', '\\|')  # экранируем | в тексте
-        table += f"| #{issue_id} | | {subject} |\n"
+        issue_id = issue["id"]
+        subject = issue["subject"].replace("|", "\\|")
+
+        related_ids = get_related_issues(issue_id)
+        if related_ids:
+            related_text = " ".join(f"#{rid}" for rid in related_ids)
+        else:
+            related_text = " "
+
+        table += f"| #{issue_id} | {related_text} | {subject} |\n"
+
     return table
 
 def main():
     version_id = get_version_id(PROJECT_IDENTIFIER, VERSION_NAME)
     issues = get_issues(PROJECT_IDENTIFIER, version_id, ISSUE_TAG, STATUS)
-    table_text = format_issues_as_redmine_table(issues)
-    print(table_text)
+    table = format_issues_as_redmine_table(issues)
+    print(table)
 
 if __name__ == "__main__":
     main()
