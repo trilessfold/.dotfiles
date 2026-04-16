@@ -2,7 +2,12 @@ return {
     {
         "tpope/vim-fugitive",
     },
-
+    {
+        "trilessfold/guit.nvim",
+        dependencies = {
+            "tpope/vim-fugitive",
+        },
+    },
     {
         "NeogitOrg/neogit",
         lazy = true,
