@@ -22,3 +22,15 @@ Where the R option is restowing with deleting obsolete symlinks
     $ git restore .
     $ stow -R .
 ```
+
+# Nix packages
+All user CLI tools are described in `dev.nix` (stowed as `~/dev.nix`).
+Install/sync everything with one command (replaces the whole nix profile
+with the contents of dev.nix):
+``` bash
+    $ nix-env -irf ~/dev.nix
+```
+Update to fresh versions:
+``` bash
+    $ nix-channel --update && nix-env -irf ~/dev.nix
+```
