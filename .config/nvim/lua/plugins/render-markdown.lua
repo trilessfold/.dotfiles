@@ -1,4 +1,3 @@
-local obsidian = require "plugins.obsidian"
 return {
     "MeanderingProgrammer/render-markdown.nvim",
     enabled = true,
