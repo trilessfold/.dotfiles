@@ -53,9 +53,17 @@ return {
     ft = "markdown",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
-        workspaces = {
-            { path = "~/Documents/Abrakadabra" },
-        },
+        -- The same vault lives at different paths: Mac ~/Documents/Abrakadabra, work host ~/vault.
+        -- Only existing directories are passed, otherwise obsidian.nvim refuses to set up.
+        workspaces = (function()
+            local ws = {}
+            for _, path in ipairs({ "~/Documents/Abrakadabra", "~/vault" }) do
+                if vim.fn.isdirectory(vim.fn.expand(path)) == 1 then
+                    table.insert(ws, { name = vim.fs.basename(path), path = path })
+                end
+            end
+            return ws
+        end)(),
         daily_notes = {
             folder = "dailies",
             template = "daily.md",
