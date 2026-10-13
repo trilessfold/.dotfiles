@@ -49,8 +49,8 @@ local gd_registered = false
 return {
     "obsidian-nvim/obsidian.nvim",
     version = "*",
-    lazy = true,
-    ft = "markdown",
+    -- Always loaded: :Obsidian commands (search, new, today...) must work before any markdown buffer is open.
+    lazy = false,
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
         -- The same vault lives at different paths: Mac ~/Documents/Abrakadabra, work host ~/vault.
