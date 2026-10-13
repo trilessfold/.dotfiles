@@ -6,6 +6,7 @@ vim.cmd("set t_Co=256")
 vim.cmd("set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz")
 
 vim.opt.spelllang = 'en,ru'
+vim.opt.spell = false
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -25,4 +26,3 @@ vim.opt.diffopt:append({
 
 vim.g.autoformat = false
 vim.b.autoformat = false
-
