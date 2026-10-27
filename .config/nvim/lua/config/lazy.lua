@@ -60,3 +60,9 @@ require("lspconfig").elp.setup({
         return LazyVim.root.cwd()
     end
 })
+
+require("lspconfig").elixirls.setup({
+    root_dir = function(fname)
+        return LazyVim.root.cwd()
+    end
+})
